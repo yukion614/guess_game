@@ -1,0 +1,254 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* 垂直方向排列 */
+    align-items: center; /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    height: 100vh;
+
+
+    background-image: url("../template/img/bg.jpg"); /* 设置背景图片 */
+    background-size: cover; /* 图片覆盖整个屏幕 */
+    background-repeat: no-repeat; /* 不重复显示图片 */
+}
+
+#timer {
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    font-size: 16px;
+    color: #ff6f61;
+    font-size: 30px;
+    text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white; 
+}
+#counter {
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    font-size: 16px;
+    color: #ff6f61;
+    font-size: 30px;
+    text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white; 
+}
+
+h1 {
+    text-align: center;
+    color: #ff6f61;
+    margin-bottom: 20px;
+    font-size: 42px;
+}
+
+#question-container {
+    background-color:linen;
+    padding: 20px;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+   
+}
+#question-text {
+    text-align: left;
+}
+#next-button {
+    display: none;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color:darkslategrey;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+#next-button {
+    display: block;
+    margin: 20px auto;
+    background-color: #ff6f61;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 25px;
+}
+
+#next-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#next-button:hover {
+    background-color: #ff524f;
+}
+
+p.result-text {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+    color: #ff6f61;
+}
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+    justify-content: space-between;
+    text-align: center;
+    padding: 20px;
+    
+    
+    border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    max-height: 70%;
+    margin: 0 auto;
+    margin-top: 50px;
+  
+
+   
+}
+
+
+
+
+
+
+#question-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 1200px;
+    max-width: 70%;
+    background-color: rgba(255, 252, 192, 0.4); 
+   
+}
+
+#question-text {
+    margin-bottom: 20px;
+    font-size: 36px;
+    
+   
+}
+
+#ox {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    justify-content:center;
+    align-items: center; /* 讓 ox 在垂直方向上置中 */
+    margin-top: 20px;
+    margin-bottom: 20px; /* 添加一些底邊距，與下面的內容有間隔 */
+
+  
+    
+ 
+}
+
+#ox > div {
+    margin-right: 10px;
+    display: flex;
+    justify-content:center;
+    align-items: center; /* 讓 ox 在垂直方向上置中 */
+}
+
+#answer-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 将选项左对齐 */
+    margin-top: 20px;
+    align-self: flex-start; /* 将整个表单左对齐 */
+    margin-bottom: 20px;
+    text-align: left;
+}
+#answer-form label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 22px;
+    text-align: left; /* 将选项文字左对齐 */
+}
+
+#next-button {
+    margin-top: 20px;
+    align-self: center;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between; /* 让子元素靠左和靠右对齐 */
+    align-items: center; /* 让子元素在垂直方向上对齐 */
+    text-align: left;
+    
+}
+
+#overlay-image {
+    margin-bottom: 25px;
+
+
+}
+#top {
+    align-self: flex-start; /* 让最上面的子元素置顶 */
+}
+.overlay-item {
+    visibility: hidden;
+    display:block;
+
+ 
+}
+
+#answer-form label {
+    display: flex;
+    align-items: center; /* 將選項和文字垂直居中對齊 */
+    margin-bottom: 10px;
+    font-size: 32px;
+  }
+
+#answer-form input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+  
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+   
+    
+  }
+  
+  #answer-form input[type="radio"]:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  audio {
+    display: none;
+}
+
+
+#gifContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#gifImage {
+    display: none;
+    max-width: 100%;
+    max-height: 100%;
+}

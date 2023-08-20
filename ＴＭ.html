@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>答題遊戲</title>
+    
+    <style>
+        #timer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+    </style>
+   
+       
+     <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <!--背景音樂-->
+    
+    <audio id="backgroundMusic" controls autoplay loop>
+            <source src="../template/audio/背景音樂.mp3">
+
+    </audio>
+    <script>
+        const backgroundMusic = document.getElementById("backgroundMusic");
+        
+        // 頁面加載後播放音樂
+        document.addEventListener("DOMContentLoaded", () => {
+            backgroundMusic.play()
+                .catch(error => {
+                    // 無法播放時
+                    console.error("自动播放失败:", error);
+                });
+        });
+    </script>
+   
+    <!--背景音樂end-->
+
+    <!--正確音效-->
+        <audio id="correctMusic" controls>
+            <source src="../template/audio/答案正確.mp3">
+        </audio>
+    <!--正確音效end-->
+
+    <!--錯誤音效-->
+        <audio id="errorMusic" controls>
+            <source src="../template/audio/答案錯誤.mp3">
+        </audio>
+    <!--錯誤音效end-->
+
+    <!--開獎音效-->
+        <audio id="answerMusic" controls>
+            <source src="../template/audio/開獎結果.mp3">
+        </audio>
+
+    <!--開獎音效end-->
+     <!--使用者登入次數-->
+     <div id="counter">答題人數：0</div>
+     
+     <script>
+        // 讀取 Local Storage 中的計數器值
+        let counterValue = parseInt(localStorage.getItem('counterValue')) || 0;
+        
+        // 顯示計數器值
+        const counterElement = document.getElementById('counter');
+        counterElement.textContent = `答題人數：${counterValue}`;
+    
+        // 每次開啟網站時，將計數器值增加 1 並更新顯示
+        counterElement.textContent = `答題人數：${counterValue}`;
+    
+        // 將更新後的計數器值寫入 Local Storage
+        localStorage.setItem('counterValue', counterValue.toString());
+     </script>
+    
+     <!--end-->
+    
+    <h1>金融小常識</h1>
+    <div id="question-container" class="centered-container">
+
+        
+        <div id="question-text"></div>
+            <div  class="main-container">
+                <div id="ox">
+                    <div  id="overlay">
+                        <img class="overlay-item" id="overlay-image" src="../template/img/crrect.gif" alt="GIF">
+                    </div> 
+                    <div  id="overlay">
+                        <img class="overlay-item" id="overlay-image" src="../template/img/crrect.gif" alt="GIF">
+                    </div> 
+                   
+    
+                </div>
+              
+                <form id="answer-form">
+                    <label> <input type="radio" name="answer" value="option1" ></label><br>
+                    <label> <input type="radio" name="answer" value="option2" ></label><br>
+                   
+                </form>
+
+               
+            </div>
+        
+        <button id="next-button">按Ｎ下一題</button>
+    
+        
+    </div>
+   
+    
+    <script>
+        let questionIndex = 0;
+        const urlParams = new URLSearchParams(window.location.search);
+        let correctAnswers =0;
+
+        const allQuestions = [
+        // 金融題庫
+        {
+            question: "可以每天定期定額買進黃金、分攤平均成本的金融商品是黃金撲滿",
+            options: ["(A)是", "(B)非"],
+            correctAnswer: 0
+        },
+        {
+            question: "我想在臺灣銀行網路銀行買賣黃金，要點選網銀的財富管理專區",
+            options: ["(A)是", "(B)非"],
+            correctAnswer: 1
+        },
+        {
+            question: "買賣黃金存摺需要手續費",
+            options: ["(A)是", "(B)非"],
+            correctAnswer: 1
+        },
+        {
+            question: "避免保險金和退休金被惡意奪產或詐騙，可以來臺灣銀行辦安養信託",
+            options: ["(A)是", "(B)非"],
+            correctAnswer: 0
+        },
+        {
+            question: "臺灣銀行為了照顧身心障礙者的財產安全，開辦珍愛人生安養信託服務",
+            options: ["(A)是", "(B)非"],
+            correctAnswer: 0
+        },
+        {
+            question: "臺灣銀行導盲犬信用卡，刷卡消費能做公益捐款給導盲犬協會",
+            options: ["(A)是", "(B)非"],
+            correctAnswer: 0
+        },
+      
+       
+    ];
+    
+    const selectedQuestions = [];
+    while (selectedQuestions.length < 6) {
+        const randomIndex = Math.floor(Math.random() * allQuestions.length);
+        if (!selectedQuestions.includes(randomIndex)) {
+            selectedQuestions.push(randomIndex);
+        }
+    }
+
+    const questions = selectedQuestions.map(index => allQuestions[index]);
+    //const fixedQuestionIndices = [getRandomIndex()]; // 隨機選擇一個題目索引
+    //const questions = fixedQuestionIndices.map(index => allQuestions[index]);
+    function getRandomIndex() {
+        return Math.floor(Math.random() * allQuestions.length);
+    }
+
+        let questionNumber = 1; // 初始题号为 1
+        displayQuestion(questionIndex);
+
+        //問題項目
+        function displayQuestion(index) {
+           
+           const questionContainer = document.getElementById("question-container");
+           const questionText = document.getElementById("question-text");
+           const answerForm = document.getElementById("answer-form");
+           const options = questions[index].options;
+           //問題
+           questionText.textContent = `Q:${questions[index].question}`; // 显示题号
+
+           const optionLabels = answerForm.querySelectorAll("label");
+           optionLabels.forEach((label, i) => {
+               label.innerHTML = `<input type="radio" name="answer" value="option${i + 1}">${options[i]}`;
+           });
+       }
+        //問題項目end
+
+            function initGame() {
+                //紅圈圈讀取 0,1
+                document.getElementById("next-button").style.display = "none";
+                let correctIndex = 9999;
+                const overlayItems = document.querySelectorAll(".overlay-item");
+                let keyDown =4;
+                //監聽按鈕
+                document.addEventListener('keydown', function(event) {
+                    const key = event.key.toLowerCase();
+                  
+                    if (key === 'a' || key === 'b' ) {
+                        let option = 'option1';
+                        switch (key) {
+                            case 'a':
+                                option = 'option1';
+                                keyDown =0;
+                                correctIndex = questions[questionIndex].correctAnswer;
+                                
+                                break;
+                            case 'b':
+                                option = 'option2';
+                                keyDown =1;
+                                correctIndex = questions[questionIndex].correctAnswer;
+                                
+                                break;
+                           
+                            default:
+                                option = 'option0';
+                                break;
+                        }
+                        
+                        const selectedOption = document.querySelector(`[value="${option}"]`);
+                        
+                      
+                        if (selectedOption) {
+                            
+                            selectedOption.checked = true;
+                            //顯示紅圈圈
+                            overlayItems[ correctIndex ].style.visibility= "visible";   
+                            //按下音效
+                            const soundEffect1 = document.getElementById("correctMusic");
+                            const soundEffect2 = document.getElementById("errorMusic");
+                            
+                                
+                                if (correctIndex === keyDown ) {
+                                    correctAnswers++;
+                                    soundEffect1.play();         
+                                } else {
+                                    soundEffect2.play();
+                                }
+
+                            setTimeout(() => {
+                             
+                                if(correctAnswers === 1){
+                                     //開獎音效
+                                    const soundEffect3 = document.getElementById("answerMusic");
+                                    soundEffect3.play();
+                                    document.getElementById("next-button").style.display = "block"; 
+                                    document.getElementById("question-text").textContent = "即將進入30秒答題環節!!";
+                                    document.getElementById("answer-form").style.display = "none";
+                                    document.getElementById("ox").style.display = "none";
+                                    //下一個按鈕
+                                    document.getElementById("next-button").textContent = "等待畫面3秒";//clearInterval(timerInterval);                          document.getElementById("question-text").textContent = "即將進入30秒答題環節!!";
+                                    document.getElementById("answer-form").style.display = "none";
+                                    document.getElementById("ox").style.display = "none";
+                                    //跳頁
+                                    setTimeout(()=>{
+                                        window.location.href = "game.html";
+                                    },3000);
+                                }else{
+                                    //消紅圈圈
+                                    overlayItems[ correctIndex ].style.visibility= "hidden";  
+                                    //下一題功能
+                                    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+                                    if (selectedAnswer) {
+                                        const selectedValue = selectedAnswer.value;
+                                        const correctIndex = questions[questionIndex].correctAnswer;
+                                        questionIndex++;
+                                        if (questionIndex < questions.length) {
+                                            displayQuestion(questionIndex);
+                                        } else {
+                                            endGame();
+                                        }
+
+                                        selectedAnswer.checked = false;
+                                    }
+                                }
+                            }, 1000);  
+                        }
+                    }
+
+                    if (event.key === "s" ) {
+                       
+                        window.location.href = "index.html";
+                    }
+                });
+
+                
+               
+            }
+
+        initGame();
+
+      
+   
+    </script>
+</body>
+</html>
